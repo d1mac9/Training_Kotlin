@@ -1,8 +1,9 @@
-fun reverseText(text: String) {
+fun reverseText(text: String): String {
     var n: Int = text.length
-    print("Перевернутая фраза: ")
+    var reversedText = ""
     while (n > 0) {
         n--
-        print(text[n])
+        reversedText += text[n]
     }
+    return reversedText
 }

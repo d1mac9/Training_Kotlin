@@ -4,5 +4,6 @@ fun main() {
     val scan = Scanner(System.`in`)
     println("Введите фразу, которую нужно перевернуть: ")
     val originalText: String = scan.nextLine()
-    reverseText(originalText)
+    print("Перевернутая фраза: ")
+    print(reverseText(originalText))
 }
