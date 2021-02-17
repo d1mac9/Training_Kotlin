@@ -1,4 +1,4 @@
 fun main(){
-    println(calculate("-(-2)+9"))
+    println(calculate("null"))
 
 }

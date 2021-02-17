@@ -10,6 +10,13 @@ fun calculate(expression: String): Double {
 private fun validationExpression(expression: String): String {
     var counter = 0
 
+    if (expression.isEmpty()){
+        throw Exception("Введенное выражение пустое")
+    }
+    if (expression[0] in "+*/" || expression[expression.length-1] in "-+*/"){
+        throw Exception("Выражение начинается(заканчивается) с оператора(ом)")
+    }
+
     for (token in expression.indices) {
         if (expression[token] != '*' && expression[token] != '/' && expression[token] != '+'
             && expression[token] != '-' && expression[token] != '.' && expression[token] != '('
