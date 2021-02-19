@@ -1,0 +1,41 @@
+#Eclipse
+.recommenders/
+.metadata/
+.classpath
+.project
+.pydevproject
+.settings/
+bin/
+
+#IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+#NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Build files
+build
+.allure
+.gradle
+**/target/
+**/build/
+**/out/
+
+#macOS
+.DS_Store
+
+#Unix
+nohup.out
+
+### VS Code ###
+.vscode/
+
+/bank-guarantee/allure-results/
+/eiszhs/allure-results/
