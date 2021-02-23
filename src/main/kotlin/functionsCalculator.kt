@@ -7,13 +7,13 @@ fun calculate(expression: String): Double {
     return rpnToAnswer(rpn)
 }
 
-private fun validationExpression(expression: String): String {
+fun validationExpression(expression: String): String {
     var counter = 0
 
-    if (expression.isEmpty()){
+    if (expression.isEmpty()) {
         throw Exception("Введенное выражение пустое")
     }
-    if (expression[0] in "+*/" || expression[expression.length-1] in "-+*/"){
+    if (expression[0] in "+*/" || expression[expression.length - 1] in "-+*/") {
         throw Exception("Выражение начинается(заканчивается) с оператора(ом)")
     }
 
@@ -23,6 +23,12 @@ private fun validationExpression(expression: String): String {
             && expression[token] != ')' && expression[token] !in '0'..'9'
         ) {
             throw Exception("Введен некорректный символ: \"" + expression[token] + "\"")
+        }
+        if (expression[token] in "*/+-" && expression[token+1] in "*/+-"){
+            throw Exception("Два оператора подряд")
+        }
+        if (expression[token] in "." && expression[token+1] in "."){
+            throw Exception("Две точки подряд")
         }
 
         if (expression[token] == '(') {
@@ -43,7 +49,7 @@ private fun validationExpression(expression: String): String {
     return expression
 }
 
-private fun preparingExpression(expression: String): String {
+fun preparingExpression(expression: String): String {
     var preparedExpression = ""
     for (token in expression.indices) {
         val symbol = expression[token]
@@ -54,12 +60,23 @@ private fun preparingExpression(expression: String): String {
                 preparedExpression += '0'
             }
         }
+        if (symbol == '.') {
+            if (token == 0) {
+                preparedExpression += '0'
+            } else if (expression[token - 1] !in '0'..'9') {
+                preparedExpression += '0'
+            } else if (token == expression.length - 1) {
+                continue
+            } else if (expression[token + 1] !in '0'..'9') {
+                continue
+            }
+        }
         preparedExpression += symbol
     }
     return preparedExpression
 }
 
-private fun expressionToRPN(expression: String): String {
+fun expressionToRPN(expression: String): String {
     var current = ""
     val stack = Stack<Char>()
     var priority: Int
@@ -95,7 +112,7 @@ private fun expressionToRPN(expression: String): String {
     return current
 }
 
-private fun rpnToAnswer(rpn: String): Double {
+fun rpnToAnswer(rpn: String): Double {
     var operand = ""
     val stack = Stack<Double>()
     var counter = 0
