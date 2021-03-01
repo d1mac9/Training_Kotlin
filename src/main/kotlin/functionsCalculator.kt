@@ -48,26 +48,20 @@ fun validationExpression(expression: String): String {
 
 fun preparingExpression(expression: String): String {
     val preparedExpression: StringBuilder = StringBuilder()
+
     for (token in expression.indices) {
         val symbol = expression[token]
+
         when (symbol) {
-            '-' -> {
-                if (token == 0) {
-                    preparedExpression.append('0')
-                } else if (expression[token - 1] == '(') {
-                    preparedExpression.append('0')
-                }
+            '-' -> when {
+                token == 0 -> preparedExpression.append('0')
+                expression[token - 1] == '(' -> preparedExpression.append('0')
             }
-            '.' -> {
-                if (token == 0) {
-                    preparedExpression.append('0')
-                } else if (expression[token - 1] !in '0'..'9') {
-                    preparedExpression.append('0')
-                } else if (token == expression.length - 1) {
-                    continue
-                } else if (expression[token + 1] !in '0'..'9') {
-                    continue
-                }
+            '.' -> when {
+                token == 0 -> preparedExpression.append('0')
+                expression[token - 1] !in '0'..'9' -> preparedExpression.append('0')
+                token == expression.length - 1 -> continue
+                expression[token + 1] !in '0'..'9' -> continue
             }
         }
         preparedExpression.append(symbol)
@@ -119,37 +113,39 @@ fun rpnToAnswer(rpn: String): Double {
     var j: Int
 
     for (i in rpn.indices) {
-        if (counter > 1) {
-            counter--
-            continue
-        }
-        if (rpn[i] == ' ') {
-            continue
-        }
-        if (getPriority(rpn[i]) == 0) {
-            j = i
-            counter = 0
-            while (rpn[j] != ' ' && getPriority(rpn[j]) == 0) {
-                operand.append(rpn[j++])
-                if (j == rpn.length) {
-                    break
+        when {
+            counter > 1 -> {
+                counter--
+                continue
+            }
+
+            rpn[i] == ' ' -> continue
+
+            getPriority(rpn[i]) == 0 -> {
+                j = i
+                counter = 0
+                while (rpn[j] != ' ' && getPriority(rpn[j]) == 0) {
+                    operand.append(rpn[j++])
+                    if (j == rpn.length) {
+                        break
+                    }
+                    counter++
                 }
-                counter++
-            }
-            stack.push(operand.toString().toDouble())
-            operand = StringBuilder()
-        }
-        if (getPriority(rpn[i]) > 1) {
-            val a = stack.pop()
-            val b = stack.pop()
-
-            when (rpn[i]) {
-                '+' -> stack.push(b + a)
-                '-' -> stack.push(b - a)
-                '*' -> stack.push(b * a)
-                '/' -> stack.push(b / a)
+                stack.push(operand.toString().toDouble())
+                operand = StringBuilder()
             }
 
+            getPriority(rpn[i]) > 1 -> {
+                val a = stack.pop()
+                val b = stack.pop()
+
+                when (rpn[i]) {
+                    '+' -> stack.push(b + a)
+                    '-' -> stack.push(b - a)
+                    '*' -> stack.push(b * a)
+                    '/' -> stack.push(b / a)
+                }
+            }
         }
     }
     return stack.pop()
