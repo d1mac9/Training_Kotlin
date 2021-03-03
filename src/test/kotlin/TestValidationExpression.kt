@@ -21,7 +21,7 @@ class TestValidationExpression : ShouldSpec() {
 //        context("2 operators near") {
 //            validationExpression("-/2+20") shouldBe Exception("Два оператора подряд")
 //        }
-        context("Happy pass") {
+        context("Happy path") {
             validationExpression("(2+3-5*9+(1-3))") shouldBe "(2+3-5*9+(1-3))"
         }
     }

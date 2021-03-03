@@ -10,7 +10,7 @@ class TestRpnToAnswer : ShouldSpec() {
         context("Expression with zero") {
             rpnToAnswer("0 2-") shouldBe -2
         }
-        context("Happy pass long expression") {
+        context("Happy path long expression") {
             rpnToAnswer("46 23.45 + 4 5 * - 8 +") shouldBe 57.45
         }
     }

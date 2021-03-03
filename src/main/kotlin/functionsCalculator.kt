@@ -22,7 +22,7 @@ fun validationExpression(expression: String): String {
             && expression[token] != '-' && expression[token] != '.' && expression[token] != '('
             && expression[token] != ')' && expression[token] !in '0'..'9'
         ) {
-            throw Exception("Введен некорректный символ: \"" + expression[token] + "\"")
+            throw Exception("Введен некорректный символ: ${expression[token]}")
         }
         if (expression[token] in "*/+-" && expression[token + 1] in "*/+-") {
             throw Exception("Два оператора подряд")

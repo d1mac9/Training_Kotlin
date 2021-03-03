@@ -30,7 +30,7 @@ class TestPreparingExpression : ShouldSpec() {
         context("Expression has some dots") {
             preparingExpression(".6.+.2.+1.") shouldBe "0.6+0.2+1"
         }
-        context("Happy pass") {
+        context("Happy path") {
             preparingExpression("6+0.132+1") shouldBe "6+0.132+1"
         }
     }
