@@ -1,4 +1,5 @@
 import org.jsoup.Jsoup
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.function.BiFunction
 
@@ -11,10 +12,14 @@ fun main() {
     val prepared = text.replace("""[^а-я a-z]""".toRegex(), "")
     val listWords = prepared.split(" ")
     for (word in listWords) {
-        map.compute(word
-        ) { k: String, v: Int? -> if (v == null) 1 else v + 1 }
+        if (word.isNotEmpty()) {
+            map.compute(word) { _: String, v: Int? ->
+                if (v == null) 1 else v + 1
+            }
+        }
     }
-    println("Частота использования слов: ${map}")
+    val sortedMap = map.toList().sortedByDescending { it.second }
+    println("Частота использования слов: $sortedMap")
     println("Общее число слов: ${listWords.count()}")
 }
 
